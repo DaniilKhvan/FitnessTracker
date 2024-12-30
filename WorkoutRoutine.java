@@ -1,25 +1,49 @@
-public class WorkoutRoutine {
-    private String workoutName;
-    private int duration; // in minutes
-    private int caloriesBurned;
+import java.util.Objects;
 
-    public WorkoutRoutine(String workoutName, int duration, int caloriesBurned) {
-        this.workoutName = workoutName;
+public abstract class WorkoutRoutine {
+    private String name;
+    private int duration; // in minutes
+    private String date; // e.g., "YYYY-MM-DD"
+
+    public WorkoutRoutine(String name, int duration, String date) {
+        this.name = name;
         this.duration = duration;
-        this.caloriesBurned = caloriesBurned;
+        this.date = date;
     }
 
-    public String getWorkoutName() { return workoutName; }
-    public void setWorkoutName(String workoutName) { this.workoutName = workoutName; }
+    public String getName() {
+        return name;
+    }
 
-    public int getDuration() { return duration; }
-    public void setDuration(int duration) { this.duration = duration; }
+    public int getDuration() {
+        return duration;
+    }
 
-    public int getCaloriesBurned() { return caloriesBurned; }
-    public void setCaloriesBurned(int caloriesBurned) { this.caloriesBurned = caloriesBurned; }
+    public String getDate() {
+        return date;
+    }
+
+    // Abstract method for calorie calculation
+    public abstract int calculateCaloriesBurned();
 
     @Override
     public String toString() {
-        return "WorkoutRoutine{name='" + workoutName + "', duration=" + duration + " mins, caloriesBurned=" + caloriesBurned + "}";
+        return "WorkoutRoutine{name='" + name + "', duration=" + duration +
+               " minutes, date='" + date + "'}";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        WorkoutRoutine that = (WorkoutRoutine) o;
+        return duration == that.duration &&
+               Objects.equals(name, that.name) &&
+               Objects.equals(date, that.date);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, duration, date);
     }
 }
